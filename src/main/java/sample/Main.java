@@ -20,13 +20,11 @@ public class Main extends Application {
         // Parent root = FXMLLoader.load(getClass().getResource("../../resources/main.fxml"));
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/main.fxml"));
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setInitialDirectory(new File("src"));
 
         Parent root = loader.load();
 
         primaryStage.setTitle("ACDP Test Gui");
-        primaryStage.setScene(new Scene(root, 400, 400));
+        primaryStage.setScene(new Scene(root, 2000, 800));
         primaryStage.show();
         Controller myController = loader.getController();
 
