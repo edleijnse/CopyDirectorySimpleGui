@@ -24,6 +24,9 @@ public class Controller {
     private TextField txtSearchKeywords = new TextField();
 
     @FXML
+    private Label lblAcdpDirectory = new Label();
+
+    @FXML
     public void setAcdpDirectory(Event e){
 
         System.out.println("Button setAcdpDiretory clicked");
@@ -31,6 +34,7 @@ public class Controller {
         choosedDirectory = directoryChooser.showDialog(new Stage());
         String myChoosenDirectory = choosedDirectory.toPath().toString();
         System.out.println("choosedDirectory: " + myChoosenDirectory);
+        lblAcdpDirectory.setText(myChoosenDirectory);
 
 
     }
@@ -39,7 +43,7 @@ public class Controller {
     public void startSearch(Event e){
         System.out.println("Button startSearch clicked");
         AcdpAccessor acdpAccessor = new AcdpAccessor();
-        listItems.getItems().removeAll();
+        listItems.getItems().clear();
         listItems.refresh();
 
         List<ImageRow> imageWithSomeKeywords = acdpAccessor.selectFromImageTable(true,"/media/psf/MyDrive01/acdp/acdpImage/layout", "-","-", BigInteger.valueOf(0),txtSearchKeywords.getText());
@@ -47,6 +51,7 @@ public class Controller {
             listItems.getItems().add(imageRow.getDirectory()+", "+imageRow.getFile()+", " + imageRow.getIptcKeywords());
         });
         listItems.refresh();
+
 
     }
     private void configuringDirectoryChooser(DirectoryChooser directoryChooser) {

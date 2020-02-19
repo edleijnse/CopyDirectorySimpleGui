@@ -10,8 +10,9 @@
             <TextField fx:id="txtSearchKeywords" layoutX="29.0" layoutY="104.0" />
             <Label fx:id="lblSearchKeywords" layoutX="29.0" layoutY="82.0" text="search Keywords" />
             <Button fx:id="cmdStart" layoutX="29.0" layoutY="54.0" onAction="#startSearch" text="start" />
-            <Button fx:id="cmdAcdpDirectory" layoutX="29.0" layoutY="17.0"  onAction="#setAcdpDirectory" text="ACDP directory" />
+            <Button fx:id="cmdAcdpDirectory" layoutX="29.0" layoutY="17.0" onAction="#setAcdpDirectory" text="ACDP directory" />
             <ListView fx:id="listItems" layoutX="29.0" layoutY="172.0" prefHeight="600.0" prefWidth="1600.0" />
+            <Label fx:id="lblAcdpDirectory" layoutX="164.0" layoutY="22.0" />
          </children></AnchorPane>
    </children>
    <columnConstraints>
