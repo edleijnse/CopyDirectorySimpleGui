@@ -58,7 +58,7 @@ public class Controller {
         listItems.getItems().clear();
         listItems.refresh();
 
-        List<ImageRow> imageWithSomeKeywords = acdpAccessor.selectFromImageTable(true,"/media/psf/MyDrive01/acdp/acdpImage/layout", "-","-", BigInteger.valueOf(0),txtSearchKeywords.getText());
+        List<ImageRow> imageWithSomeKeywords = acdpAccessor.selectFromImageTable(true,lblAcdpDirectory.getText() + "/layout", "-","-", BigInteger.valueOf(0),txtSearchKeywords.getText());
         imageWithSomeKeywords.forEach(imageRow -> {
             listItems.getItems().add(imageRow.getDirectory()+"/"+imageRow.getFile()+", keywords: " + imageRow.getIptcKeywords());
         });
