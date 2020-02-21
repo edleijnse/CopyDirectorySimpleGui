@@ -11,7 +11,9 @@ import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import leijnse.info.AcdpAccessor;
+import leijnse.info.ExtractPictureMetaData;
 import leijnse.info.ImageRow;
+import leijnse.info.PictureMetaData;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -90,8 +92,13 @@ public class Controller {
                 FileInputStream input = new FileInputStream(myImage);
                 Image image = new Image(input);
                 ImageView imageView = new ImageView(image);
+
+                System.out.println("pictureMetaData Image Height: " + image.getHeight());
+                System.out.println("pictureMetaDate Image Widht: " + image.getWidth());
                 imageView.setFitHeight(300);
-                imageView.setFitWidth(200);
+                double sizeCorrector = (image.getWidth() / image.getHeight());
+                double correctedSize = sizeCorrector * 300;
+                imageView.setFitWidth(correctedSize);
                 lblClickedImage.setGraphic(imageView);
             }
             else {
