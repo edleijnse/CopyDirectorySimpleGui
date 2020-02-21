@@ -91,7 +91,7 @@ public class Controller {
                 Image image = new Image(input);
                 ImageView imageView = new ImageView(image);
                 imageView.setFitHeight(300);
-                imageView.setFitWidth(300);
+                imageView.setFitWidth(200);
                 lblClickedImage.setGraphic(imageView);
             }
             else {
