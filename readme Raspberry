@@ -1,0 +1,8 @@
+For Raspberry PI 4 Installation:
+Download gluon Vesion of javafx, e.g.
+https://gluonhq.com/products/javafx/
+make reference to downloaded software in Run, Edit Configuration
+Change Configuration in
+--module-path /media/pi/datapartition/IdeaProjects/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml
+More Information in:
+https://www.raspberrypi.org/forums/viewtopic.php?t=252617
