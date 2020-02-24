@@ -6,3 +6,10 @@ Change Configuration in
 --module-path /media/pi/datapartition/IdeaProjects/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml
 More Information in:
 https://www.raspberrypi.org/forums/viewtopic.php?t=252617
+
+Macos:
+https://gluonhq.com/products/javafx/
+javafx-sdk-11.0.2 Libaries add to project
+VM args: --module-path /Library/Java/JavaVirtualMachines/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml
+
+

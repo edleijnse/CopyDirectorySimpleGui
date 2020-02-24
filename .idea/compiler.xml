@@ -19,8 +19,6 @@
         <module name="CopyDirectorySimpleGui" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="CopyDirectorySimpleGui" target="1.8" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="11" />
   </component>
 </project>
