@@ -29,10 +29,9 @@ public class Controller {
 
     private ListView listImages = new ListView();
     DirectoryChooser directoryChooser = new DirectoryChooser();
-    File choosedAcdpDirectory =new File("dummy");
-    File choosedImageDirectory =new File("dummy");
-    File choosedEmptyImageDirectory =new File("dummy");
-
+    File choosedAcdpDirectory = new File("dummy");
+    File choosedImageDirectory = new File("dummy");
+    File choosedEmptyImageDirectory = new File("dummy");
 
 
     @FXML
@@ -49,7 +48,7 @@ public class Controller {
     private Label lblClickedImage = new Label();
 
     @FXML
-    public void setAcdpDirectory(Event e){
+    public void setAcdpDirectory(Event e) {
 
         System.out.println("Button setAcdpDiretory clicked");
         configuringDirectoryChooser(directoryChooser);
@@ -65,7 +64,7 @@ public class Controller {
     }
 
     @FXML
-    public void setImageDirectory(Event e){
+    public void setImageDirectory(Event e) {
 
         System.out.println("Button setImageDiretory clicked");
         configuringDirectoryChooser(directoryChooser);
@@ -77,22 +76,21 @@ public class Controller {
     }
 
 
-
     @FXML
-    public void cmdDirectoryNamesClicked(Event e){
+    public void cmdDirectoryNamesClicked(Event e) {
         System.out.println("Button cmdDirectoryNamesClicked clicked");
         CopyDirectory copyDirectory = new CopyDirectory();
         String myChoosenImageDirectory = choosedImageDirectory.toPath().toString();
         String myChoosenDirectory = choosedAcdpDirectory.toPath().toString() + "/layout";
-        copyDirectory.copyFilesDirectoryNameToACDP(myChoosenImageDirectory,myChoosenDirectory);
+        copyDirectory.copyFilesDirectoryNameToACDP(myChoosenImageDirectory, myChoosenDirectory);
         AcdpAccessor acdpAccessor = new AcdpAccessor();
         listItems.getItems().clear();
         listItems.refresh();
 
-        List<ImageRow> imageWithSomeKeywords = acdpAccessor.selectFromImageTable(true,lblAcdpDirectory.getText() + "/layout", "-","-", txtSearchKeywords.getText());
+        List<ImageRow> imageWithSomeKeywords = acdpAccessor.selectFromImageTable(true, lblAcdpDirectory.getText() + "/layout", "-", "-", txtSearchKeywords.getText());
         imageWithSomeKeywords.forEach(imageRow -> {
             String allKeywords = putKeyWordsInString(imageRow.getIptcKeywords());
-            listItems.getItems().add(imageRow.getDirectory()+"/"+imageRow.getFile()+", keywords: " + allKeywords);
+            listItems.getItems().add(imageRow.getDirectory() + "/" + imageRow.getFile() + ", keywords: " + allKeywords);
         });
         listItems.refresh();
         lblClickedImage.setText("");
@@ -105,35 +103,42 @@ public class Controller {
     @FXML
     public void createKeywordsFromMicrrosoftVision(Event e) throws IOException {
         System.out.println("Button createKeywordsFromMicrrosoftVision clicked");
-        String mySubscriptionKey = new String(Files.readAllBytes(Paths.get("/Users/edleijnse/OneDrive/Finanzen/Lizensen/Microsoft/keys/subscriptionKey1")));
-
+        String mySubscriptionKey = "";
+        try {
+            mySubscriptionKey = new String(Files.readAllBytes(Paths.get("/Users/edleijnse/OneDrive/Finanzen/Lizensen/Microsoft/keys/subscriptionKey1")));
+        } catch (Exception ex) {
+            try {
+                mySubscriptionKey = new String(Files.readAllBytes(Paths.get("C:\\Users\\edleijnse\\OneDrive\\Finanzen\\Lizensen\\Microsoft\\keys\\subscriptionKey1")));
+            } catch (Exception ex2) {
+                mySubscriptionKey = new String(Files.readAllBytes(Paths.get("C:\\Users\\edlei\\OneDrive\\Finanzen\\Lizensen\\Microsoft\\keys\\subscriptionKey1")));
+            }
+        }
         CopyDirectory copyDirectory = new CopyDirectory();
         copyDirectory.setSubscriptionKey(mySubscriptionKey);
         String myChoosenImageDirectory = choosedImageDirectory.toPath().toString();
         String tempDirectory = "/Volumes/MyDrive01/temp";
 
-        copyDirectory.addVisionTagsToFiles(myChoosenImageDirectory,tempDirectory );
+        copyDirectory.addVisionTagsToFiles(myChoosenImageDirectory, tempDirectory);
         System.out.println("createKeywordsFromMicrrosoftVision done");
 
     }
 
 
-
     @FXML
-    public void cmdExifDataClicked(Event e){
+    public void cmdExifDataClicked(Event e) {
         System.out.println("Button cmdExifDataClicked clicked");
         CopyDirectory copyDirectory = new CopyDirectory();
         String myChoosenImageDirectory = choosedImageDirectory.toPath().toString();
         String myChoosenDirectory = choosedAcdpDirectory.toPath().toString() + "/layout";
-        copyDirectory.copyFilesToACDP(myChoosenImageDirectory,myChoosenDirectory);
+        copyDirectory.copyFilesToACDP(myChoosenImageDirectory, myChoosenDirectory);
         AcdpAccessor acdpAccessor = new AcdpAccessor();
         listItems.getItems().clear();
         listItems.refresh();
 
-        List<ImageRow> imageWithSomeKeywords = acdpAccessor.selectFromImageTable(true,lblAcdpDirectory.getText() + "/layout", "-","-",txtSearchKeywords.getText());
+        List<ImageRow> imageWithSomeKeywords = acdpAccessor.selectFromImageTable(true, lblAcdpDirectory.getText() + "/layout", "-", "-", txtSearchKeywords.getText());
         imageWithSomeKeywords.forEach(imageRow -> {
             String allKeywords = putKeyWordsInString(imageRow.getIptcKeywords());
-            listItems.getItems().add(imageRow.getDirectory()+"/"+imageRow.getFile()+", keywords: " + allKeywords);
+            listItems.getItems().add(imageRow.getDirectory() + "/" + imageRow.getFile() + ", keywords: " + allKeywords);
         });
         listItems.refresh();
         lblClickedImage.setText("");
@@ -142,6 +147,7 @@ public class Controller {
 
 
     }
+
     @FXML
     public void cmdInitializeACDPClicked(Event e) throws IOException {
         System.out.println("Button cmdInitializeACDPClicked clicked");
@@ -151,15 +157,13 @@ public class Controller {
         String myChoosenDirectory = choosedAcdpDirectory.toPath().toString();
         choosedEmptyImageDirectory = directoryChooser.showDialog(new Stage());
         String myChoosenEmptyImageDirectory = choosedEmptyImageDirectory.toPath().toString();
-        acdpAccessor.copyLayout(myChoosenEmptyImageDirectory,myChoosenDirectory );
+        acdpAccessor.copyLayout(myChoosenEmptyImageDirectory, myChoosenDirectory);
 
     }
 
 
-
-
     @FXML
-    public void startSearch(Event e){
+    public void startSearch(Event e) {
         System.out.println("Button startSearch clicked");
         AcdpAccessor acdpAccessor = new AcdpAccessor();
         listItems.getItems().clear();
@@ -167,10 +171,10 @@ public class Controller {
         listImages.getItems().clear();
         listImages.refresh();
 
-        List<ImageRow> imageWithSomeKeywords = acdpAccessor.selectFromImageTable(true,lblAcdpDirectory.getText() + "/layout", "-","-", txtSearchKeywords.getText());
+        List<ImageRow> imageWithSomeKeywords = acdpAccessor.selectFromImageTable(true, lblAcdpDirectory.getText() + "/layout", "-", "-", txtSearchKeywords.getText());
         imageWithSomeKeywords.forEach(imageRow -> {
             String allKeywords = putKeyWordsInString(imageRow.getIptcKeywords());
-            listItems.getItems().add(imageRow.getDirectory()+"/"+imageRow.getFile()+", keywords: " + allKeywords);
+            listItems.getItems().add(imageRow.getDirectory() + "/" + imageRow.getFile() + ", keywords: " + allKeywords);
             listImages.getItems().add(imageRow.getImage());
         });
 
@@ -181,31 +185,33 @@ public class Controller {
 
 
     }
-    public String putKeyWordsInString(String[] iptcKeyWords){
+
+    public String putKeyWordsInString(String[] iptcKeyWords) {
         String allKeywords = "";
         String delimitor = "";
 
-        for (int ii=0;ii<iptcKeyWords.length;ii++){
+        for (int ii = 0; ii < iptcKeyWords.length; ii++) {
             System.out.println(iptcKeyWords[ii]);
             allKeywords += delimitor + iptcKeyWords[ii];
             delimitor = ", ";
         }
         return allKeywords;
     }
+
     public Image getImage(String iFileName) throws IOException {
         System.out.println("fileName: " + iFileName);
         int ii = iFileName.lastIndexOf("/");
         System.out.println("ii: " + ii);
-        if (ii<0) {
+        if (ii < 0) {
             ii = iFileName.lastIndexOf("\\");
         }
         final byte[][] myImage = {null};
-        if (ii>0){
-            String myFileName = iFileName.substring(ii+1);
+        if (ii > 0) {
+            String myFileName = iFileName.substring(ii + 1);
             System.out.println("fileName: " + myFileName);
             AcdpAccessor acdpAccessor = new AcdpAccessor();
 
-            List<ImageRow> imageWithSomeKeywords = acdpAccessor.selectFromImageTable(true,lblAcdpDirectory.getText() + "/layout", "-",myFileName, "-");
+            List<ImageRow> imageWithSomeKeywords = acdpAccessor.selectFromImageTable(true, lblAcdpDirectory.getText() + "/layout", "-", myFileName, "-");
             imageWithSomeKeywords.forEach(imageRow -> {
                 myImage[0] = imageRow.getImage();
                 System.out.println("image found, length: " + myImage[0].length);
@@ -216,18 +222,19 @@ public class Controller {
         Image image = new Image(bis);
         return image;
     }
+
     public Image getImageFromByteArray(byte[] iImageByteArray) throws IOException {
 
         final byte[][] myImage = {null};
 
-        if (iImageByteArray != null){
+        if (iImageByteArray != null) {
             myImage[0] = iImageByteArray;
             ByteArrayInputStream bis = new ByteArrayInputStream((myImage[0]));
             Image image = new Image(bis);
             return image;
         }
 
-      return null;
+        return null;
     }
 
 
@@ -238,19 +245,19 @@ public class Controller {
         ObservableList selectedIndices = listItems.getSelectionModel().getSelectedIndices();
 
         int myIndex = 0;
-        for(Object o : selectedIndices){
+        for (Object o : selectedIndices) {
             System.out.println("o = " + o + " (" + o.getClass() + ")");
-            myIndex = (int)o;
-            String myItemText = (String)listItems.getItems().get(myIndex);
+            myIndex = (int) o;
+            String myItemText = (String) listItems.getItems().get(myIndex);
 
             System.out.println(myItemText);
             int endItemText = myItemText.indexOf(", keywords");
-            if (endItemText>0){
-                String myImage = myItemText.substring(0,endItemText);
+            if (endItemText > 0) {
+                String myImage = myItemText.substring(0, endItemText);
                 System.out.println(myImage);
                 // lblClickedImage.setText(myItemText);
                 lblClickedImage.setText("");
-                Image image1 = getImageFromByteArray((byte[])listImages.getItems().get(myIndex));
+                Image image1 = getImageFromByteArray((byte[]) listImages.getItems().get(myIndex));
                 ImageView imageView = new ImageView(image1);
 
                 System.out.println("pictureMetaData Image Height: " + image1.getHeight());
@@ -260,12 +267,12 @@ public class Controller {
                 double correctedSize = sizeCorrector * 300;
                 imageView.setFitWidth(correctedSize);
                 lblClickedImage.setGraphic(imageView);
-            }
-            else {
+            } else {
                 lblClickedImage.setText(myItemText);
             }
         }
     }
+
     private void configuringDirectoryChooser(DirectoryChooser directoryChooser) {
         // Set title for FileChooser
         directoryChooser.setTitle("Select Directory");
