@@ -26,6 +26,7 @@
                   <Font size="48.0" />
                </font>
             </Label>
+            <ListView fx:id="listKeywords" layoutX="1083.0" layoutY="402.0" prefHeight="300.0" prefWidth="200.0" />
          </children></AnchorPane>
    </children>
    <columnConstraints>

@@ -13,6 +13,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import leijnse.info.AcdpAccessor;
 import leijnse.info.CopyDirectory;
+import leijnse.info.ImageKeywordsList;
 import leijnse.info.ImageRow;
 
 import java.io.ByteArrayInputStream;
@@ -26,6 +27,9 @@ public class Controller {
 
     @FXML
     private ListView listItems = new ListView();
+
+    @FXML
+    private ListView listKeywords = new ListView();
 
     private ListView listImages = new ListView();
     DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -157,7 +161,7 @@ public class Controller {
         String myChoosenDirectory = choosedAcdpDirectory.toPath().toString();
         choosedEmptyImageDirectory = directoryChooser.showDialog(new Stage());
         String myChoosenEmptyImageDirectory = choosedEmptyImageDirectory.toPath().toString();
-        acdpAccessor.copyLayout(myChoosenEmptyImageDirectory, myChoosenDirectory);
+        acdpAccessor.replaceFolder(myChoosenEmptyImageDirectory, myChoosenDirectory);
 
     }
 
@@ -170,6 +174,8 @@ public class Controller {
         listItems.refresh();
         listImages.getItems().clear();
         listImages.refresh();
+        listKeywords.getItems().clear();
+        listKeywords.refresh();
 
         List<ImageRow> imageWithSomeKeywords = acdpAccessor.selectFromImageTable(true, lblAcdpDirectory.getText() + "/layout", "-", "-", txtSearchKeywords.getText());
         imageWithSomeKeywords.forEach(imageRow -> {
@@ -177,8 +183,15 @@ public class Controller {
             listItems.getItems().add(imageRow.getDirectory() + "/" + imageRow.getFile() + ", keywords: " + allKeywords);
             listImages.getItems().add(imageRow.getImage());
         });
+        ImageKeywordsList imageKeywordsList = acdpAccessor.selectAllKeywordsFromImageTable("jdbc:ucanaccess://E://acdp//AccessImageDatabase.accdb");
+        imageKeywordsList.getImageKeywordList().forEach(imageKeyword -> {
+                    System.out.println("KEYWOED: " + imageKeyword.getKEYWORD() + ", " + imageKeyword.getTotal());
+                    listKeywords.getItems().add(imageKeyword.getKEYWORD()+", " + imageKeyword.getTotal());
+                }
+        );
 
         listItems.refresh();
+        listKeywords.refresh();
         lblClickedImage.setText("");
         Node node = null;
         lblClickedImage.setGraphic(node);
